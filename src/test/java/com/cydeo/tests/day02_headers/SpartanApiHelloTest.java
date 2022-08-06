@@ -48,10 +48,10 @@ public class SpartanApiHelloTest {
     @Test
     public void helloBddTest(){
 
-        //BDD STYLE
-        when().get(url)
-                .then().assertThat().statusCode(200)
-                .and().contentType("text/plain;charset=UTF-8");
+        //BDD STYLE - Cucumber
+        when().get(url)// request
+                .then().assertThat().statusCode(200)  // respons
+                .and().contentType("text/plain;charset=UTF-8");  // respons
     }
 
 
