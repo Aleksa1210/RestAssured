@@ -2,12 +2,16 @@ package com.cydeo.utils;
 
 import com.cydeo.pojo_models_beans_dataObject.Spartan;
 import com.github.javafaker.Faker;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 
 public class SpartanRestUtils {
 
-    private static String baseUrl = ConfigurationReader.getProperty("spartan.api.url");
+    private static String baseUrl = ConfigurationReader.getProperty("spartan_api_url"); //
 
 
     public static void deleteSpartanById(int spartanID){
@@ -35,11 +39,21 @@ public class SpartanRestUtils {
      return spartan;
     }
 
+    /**
+     * Method accepts spartanID and sends a GET request
+     * @param spartanId
+     * @return is Map object containing response json data
+     */
+    public static Map<String, Object> getSpartan(int spartanId) {
+        Response response = given().log().uri().accept(ContentType.JSON)
+                .and().pathParam("id", spartanId)
+                .when().get(baseUrl + "/spartans/{id}");
 
-
-
-
-
+        Map<String, Object> spartanMap = response.as(Map.class);
+        System.out.println("TEST");
+        System.out.println(spartanMap);
+        return spartanMap;
+    }
 
 
 
