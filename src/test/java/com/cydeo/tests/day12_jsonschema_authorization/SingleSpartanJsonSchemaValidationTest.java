@@ -1,4 +1,106 @@
 package com.cydeo.tests.day12_jsonschema_authorization;
 
-public class SingleSpartanJsonSchemaValidationTest {
+import io.restassured.module.jsv.JsonSchemaValidator;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import io.restassured.http.ContentType;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+import com.cydeo.utils.SpartanTestBase;
+
+
+public class SingleSpartanJsonSchemaValidationTest extends SpartanTestBase {
+
+    /**
+     given accept type is json
+     and path param id is 15
+     when I send GET request to /spartans/{id}
+     Then status code is 200
+     And json payload/body matches SingleSpartanSchema.json
+     */
+    @DisplayName("Schema")
+    @Test
+    public void singe_Spartan_Schema_Validation_Test(){
+
+        given().accept(ContentType.JSON)
+                .and().pathParam("id", 15)
+                .when().get("/spartans/{id}")
+                .then().statusCode(200)
+                .and().body(JsonSchemaValidator.matchesJsonSchema(new File("src/test/resources/jsonschemas/SingleSpartnSchema.json")))
+                .and().log().all();
+
+
+    }
+
+
+    /**
+     given accept type is json
+     when I send GET request to /spartans
+     Then status code is 200
+     And json payload/body matches AllSpartansSchema.json
+     */
+
+    @DisplayName("All JSON Schema ")
+    @Test
+    public void all_Sparta_Json_Schema_Validation_Test(){
+
+        given().accept(ContentType.JSON)
+                .when().get("/spartans")
+                .then().statusCode(200)
+                .and().body(JsonSchemaValidator.matchesJsonSchema(new File("src/test/resources/jsonschemas/AllSpartansSchema.json")))
+                .and().log().all();
+
+    }
+
+    /**
+     given accept type is json
+     And query params: nameContains "e" and gender "Female"
+     when I send GET request to /spartans
+     Then status code is 200
+     And json payload/body matches SearchSpartansSchema.json
+     */
+    @DisplayName("Search JSON Schema ")
+    @Test
+    public void search_Sparta_Json_Schema_Validation_Test(){
+
+        given().accept(ContentType.JSON)
+                .and().queryParam("nameContains", "e")
+                .and().queryParam("gender", "Female")
+                .when().get("/spartans/search")
+                .then().statusCode(200)
+                .and().body(JsonSchemaValidator.matchesJsonSchema(new File("src/test/resources/jsonschemas/SearchSpartansSchema.json")))
+                .and().log().all();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
