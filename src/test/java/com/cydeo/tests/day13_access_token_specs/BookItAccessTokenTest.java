@@ -39,6 +39,12 @@ public class BookItAccessTokenTest {
        System.out.println(response.statusCode());
        Assertions.assertEquals(200, response.statusCode());
 
+       String accessToken = response.path("accessToken");
+       System.out.println(accessToken);
+
+       //access is not empty
+       Assertions.assertTrue(accessToken != null && !accessToken.isEmpty());
+
 
 
    }
