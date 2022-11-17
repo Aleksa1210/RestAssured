@@ -5,12 +5,10 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import  static io.restassured.RestAssured.*;
 import javax.annotation.meta.When;
 import java.time.LocalDate;
 import java.util.Locale;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.containsString;
@@ -75,12 +73,11 @@ public class SpartanHamcrestTest extends SpartanTestBase {
                         "content.gender", everyItem(is("Female")),
                         "content.name", everyItem(containsStringIgnoringCase("e")))
                 .log().all(); // prints all details response
-
-
-
-
-
     }
+
+
+
+
 
 
 }
