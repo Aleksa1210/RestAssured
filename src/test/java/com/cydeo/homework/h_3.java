@@ -3,27 +3,18 @@ package com.cydeo.homework;
 import io.restassured.http.Headers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import com.cydeo.pojo_models_beans_dataObject.Spartan;
-import com.cydeo.pojo_models_beans_dataObject.Spartan1;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.restassured.path.json.JsonPath;
-import org.hamcrest.Matchers;
-import org.junit.Assert.*;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import com.cydeo.utils.HRApiTestBase;
-import com.cydeo.utils.SpartanTestBase;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.DisplayName;
+
 import  static io.restassured.RestAssured.*;
-import javax.annotation.meta.When;
-import java.time.LocalDate;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 import static org.hamcrest.Matchers.is;
 
 
@@ -47,6 +38,11 @@ public class h_3 {
 
         List<String> listName = jsonPath.getList("data.first_name");
         System.out.println(listName);
+
+
+
+
+
 
     }
 
@@ -91,6 +87,8 @@ public class h_3 {
         JsonPath jsonPath = response.jsonPath();
 
 
+
+
 //  List<Spartan1> js = jsonPath.getList("", Spartan1.class);
 //      System.out.println(js);
 
@@ -113,6 +111,32 @@ public class h_3 {
                 .and().body(map)
                 .when().post(urls);
         response.prettyPrint();
+
+
+    }
+    @DisplayName("pp")
+    @Test
+    public void  test_5(){
+
+        Response response = given().accept(ContentType.JSON)
+                .when().get(url);
+        response.prettyPrint();
+
+
+    System.out.println( response.path("data.id[-1]").toString());
+        Integer id = response.path("data.id[-1]");
+        Assertions.assertEquals(6, id);
+
+        System.out.println(response.path("data.first_name[-1]").toString());
+        String name = response.path("data.first_name[5]").toString();
+        Assertions.assertEquals("Tracey", name);
+
+
+      ArrayList<String> nameList = response.path("data.first_name");
+    // System.out.println(nameList);
+        for (String first_name : nameList) {
+            System.out.println(first_name);
+        }
 
 
     }
